@@ -14,15 +14,15 @@ let ArticleSchema = new Schema({
     type:Number,
     default:0
   },
-  created:{
+  created_time:{
     type:Date,
     default:Date.now
   },
-  publish_time: {
+  release_time: {
 		type: Date,
 		default: Date.now
 	},
-  updated: {
+  updated_time: {
     type: Date,
     default: Date.now
   }
@@ -30,8 +30,8 @@ let ArticleSchema = new Schema({
 
 let Article = mongoose.model('Article',ArticleSchema)
 
-Promise.promisefyAll(Article)
-Promise.promisefyAll(Article.prototype)
+// Promise.promisifyAll(Article)
+// Promise.promisifyAll(Article.prototype)
 
 module.exports = Article
 

@@ -15,6 +15,12 @@ mongoose.Promise = global.Promise = require('bluebird')
 
 //连接数据库
 mongoose.connect(config.mongo.uri,config.mongo.options)
+let modelPath = path.join(__dirname,'model')
+fs.readdirSync(modelPath).forEach((file)=>{
+	if (/(.*)\.js$/.test(file)) {
+		require(modelPath + '/' + file);
+	}
+})
 
 const app = express()
 
@@ -26,6 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+require('./routes.js')(app)
 app.listen(config.port,function () {
-  console.log('server Listening on' + config.port + '\n')
+  console.log('server Listening on ' + config.port + '\n')
 })
