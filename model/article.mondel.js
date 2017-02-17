@@ -12,26 +12,24 @@ let ArticleSchema = new Schema({
   //0:草稿 1:已发布
   status:{
     type:Number,
+    enum:[0,1],
     default:0
   },
-  created_time:{
+  created_at:{
     type:Date,
     default:Date.now
   },
-  release_time: {
+  release_at: {
 		type: Date,
 		default: Date.now
 	},
-  updated_time: {
+  updated_at: {
     type: Date,
     default: Date.now
   }
 })
 
 let Article = mongoose.model('Article',ArticleSchema)
-
-// Promise.promisifyAll(Article)
-// Promise.promisifyAll(Article.prototype)
 
 module.exports = Article
 
