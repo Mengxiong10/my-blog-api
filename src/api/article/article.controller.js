@@ -5,8 +5,13 @@ const Article = mongoose.model('Article')
 //后台管理
 
 /*
-  POST /article
   添加博客
+  POST /article
+  {
+    "title":"f",
+    "content":"f",
+    "tags":["1232"]
+  }
 */
 exports.addArticle = function (req,res,next) {
   let error_msg
@@ -22,8 +27,15 @@ exports.addArticle = function (req,res,next) {
 }
 
 /*
-  PUT /article
   更新博客
+  PUT /article
+  {
+    "_id":1,
+    "title":"f",
+    "content":"f",
+    "tags":["s"]
+  }
+
 */
 exports.updateArticle = function (req,res,next) {
   const id = req.params.id

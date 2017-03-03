@@ -3,7 +3,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-let ArticleSchema = new Schema({
+const ArticleSchema = new Schema({
   title:{
     type:String,
     unique:true
@@ -15,6 +15,14 @@ let ArticleSchema = new Schema({
     enum:[0,1],
     default:0
   },
+  tags:[{
+    type:Schema.Types.ObjectId,
+    ref:'Tag'
+  }],
+  visit_count:{			//访问数
+		type:Number,
+		default:1
+	},
   created_at:{
     type:Date,
     default:Date.now
@@ -29,8 +37,6 @@ let ArticleSchema = new Schema({
   }
 })
 
-let Article = mongoose.model('Article',ArticleSchema)
-
-module.exports = Article
+module.exports = mongoose.model('Article',ArticleSchema)
 
 
