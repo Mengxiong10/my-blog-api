@@ -10,7 +10,7 @@ const Article = mongoose.model('Article')
   {
     "title":"f",
     "content":"f",
-    "tags":["1232"]
+    "tags":[_id]
   }
 */
 exports.addArticle = function (req,res,next) {
@@ -23,7 +23,7 @@ exports.addArticle = function (req,res,next) {
   if (error_msg) {
     return res.status(400).send({error_msg})
   }
-  Article.create(req.body).then(() => res.sendStatus(200)).catch(next)
+  return Article.create(req.body).then(() => res.sendStatus(200)).catch(next)
 }
 
 /*
@@ -33,7 +33,7 @@ exports.addArticle = function (req,res,next) {
     "_id":1,
     "title":"f",
     "content":"f",
-    "tags":["s"]
+    "tags":[_id]
   }
 
 */
@@ -52,7 +52,7 @@ exports.updateArticle = function (req,res,next) {
     return res.status(400).send({error_msg})
   }
   req.body.updated_at = new Date()
-  Article.findByIdAndUpdate(id,req.body).then(() => res.sendStatus(200)).catch(next)
+  return Article.findByIdAndUpdate(id,req.body).then(() => res.sendStatus(200)).catch(next)
 }
 
 /*
@@ -65,7 +65,7 @@ exports.updateArticleStatus = function (req,res,mext) {
     release_at: new Date(),
     status: 1
   }
-  Article.findByIdAndUpdate(id,body).then(() => res.sendStatus(200)).catch(next)
+  return Article.findByIdAndUpdate(id,body).then(() => res.sendStatus(200)).catch(next)
 }
 
 /*
@@ -74,7 +74,7 @@ exports.updateArticleStatus = function (req,res,mext) {
 */
 exports.delArticle = function (req,res,next) {
   const id = req.params.id
-  Article.findByIdAndRemove(id).then(() => res.sendStatus(204)).catch(next)
+  return Article.findByIdAndRemove(id).then(() => res.sendStatus(204)).catch(next)
 }
 
 /*
@@ -83,7 +83,7 @@ exports.delArticle = function (req,res,next) {
 */
 exports.getArticle = function (req,res,next) {
   const id = req.params.id
-  Article.findById(id).then(data => res.status(200).json({data})).catch(err => res.sendStatus(500))
+  return Article.findById(id).then(data => res.status(200).json({data})).catch(err => res.sendStatus(500))
 }
 
 /*
@@ -91,18 +91,19 @@ exports.getArticle = function (req,res,next) {
   获取博客列表
 */
 exports.getArticleList = function (req,res,next) {
+  console.log(req)
   let q = {
     page: parseInt(req.query.page) || 1,
     perPage: parseInt(req.query.per_page) || 10,
     title: req.query.title || '',
-    sort:req.query.sort || 'release_at',
+    sort:req.query.sort || 'created_at',
     order:req.query.order === 'asc' ? 'asc' : 'desc',
   }
   let start = (q.page - 1) * q.perPage
   if (q.order === 'desc') {
     q.sort = '-' + q.sort
   }
-  Article.where('title',new RegExp(q.title,'i'))
+  return Article.find()
     .sort(q.sort)
     .skip(start)
     .limit(q.perPage)

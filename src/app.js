@@ -1,4 +1,4 @@
-process.env.NODE_ENV = process.envNODE_ENV || 'development'
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 
 const express = require('express')
@@ -7,6 +7,7 @@ const path = require('path')
 const fs = require('fs')
 const bodyParser = require('body-parser')
 const compression = require('compression')
+const cors = require('cors')
 
 const config = require('./config')
 
@@ -24,6 +25,9 @@ fs.readdirSync(modelPath).forEach((file)=>{
 
 const app = express()
 
+app.use(cors())
+
+// compress all responses
 app.use(compression())
 
 // parse application/x-www-form-urlencoded

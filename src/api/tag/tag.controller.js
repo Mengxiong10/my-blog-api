@@ -19,7 +19,7 @@ exports.addTag = function (req,res,next) {
     if (tag) {
       return res.status(403).send({error_msg:'标签名已存在'})
     }else{
-      Tag.create(req.body).then(result => res.status(200).json({tag_id:result._id}))
+      return Tag.create(req.body).then(data => res.status(200).json({data}))
     }
   }).catch(next)
 }
