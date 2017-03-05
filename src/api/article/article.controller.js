@@ -91,23 +91,29 @@ exports.getArticle = function (req,res,next) {
   获取博客列表
 */
 exports.getArticleList = function (req,res,next) {
-  console.log(req)
-  let q = {
-    page: parseInt(req.query.page) || 1,
-    perPage: parseInt(req.query.per_page) || 10,
-    title: req.query.title || '',
-    sort:req.query.sort || 'created_at',
-    order:req.query.order === 'asc' ? 'asc' : 'desc',
+  let tag = req.query.tag,
+      title =  req.query.title,
+      page =  parseInt(req.query.page) || 1,
+      perPage =  parseInt(req.query.per_page) || 10,
+      sort = req.query.sort || 'created_at',
+      order = req.query.order === 'asc' ? 'asc' : 'desc'
+  let conditions = {}
+  let start = (page - 1) * perPage
+  if (tag) {
+    conditions.tags = tag 
   }
-  let start = (q.page - 1) * q.perPage
-  if (q.order === 'desc') {
-    q.sort = '-' + q.sort
+  if (title) {
+    conditions.title = new RegExp(title,'i')
   }
-  return Article.find()
-    .sort(q.sort)
+  if (order === 'desc') {
+    sort = '-' + sort
+  }
+  return Article.find(conditions)
+    .sort(sort)
     .skip(start)
-    .limit(q.perPage)
-    .then(data => Article.count().then(total => res.status(200).json({data,total})))
+    .limit(perPage)
+    .populate('tags')
+    .then(data => Article.count(conditions).then(total => res.status(200).json({data,total})))
     .catch(next)
 }
 

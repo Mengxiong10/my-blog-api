@@ -16,6 +16,7 @@ mongoose.Promise = global.Promise = require('bluebird')
 
 //连接数据库
 mongoose.connect(config.mongo.uri,config.mongo.options)
+
 let modelPath = path.join(__dirname,'model')
 fs.readdirSync(modelPath).forEach((file)=>{
 	if (/(.*)\.js$/.test(file)) {
