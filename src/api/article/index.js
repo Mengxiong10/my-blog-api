@@ -9,7 +9,7 @@ router.get('/list',controller.getArticleList)
 router.post('/',controller.addArticle)
 router.get('/:id',controller.getArticle)
 router.put('/:id',controller.updateArticle)
-router.put('/:id/updateStatus',controller.updateArticleStatus)
+router.put('/:id/status/:status',controller.updateArticleStatus)
 router.delete('/:id',controller.delArticle)
 
 module.exports = router

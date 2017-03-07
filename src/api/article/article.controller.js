@@ -56,16 +56,24 @@ exports.updateArticle = function (req,res,next) {
 }
 
 /*
-  PUT /article/:id/updateStatus
+  PUT /article/:id/status/:status
   更新博客状态
 */
-exports.updateArticleStatus = function (req,res,mext) {
+exports.updateArticleStatus = function (req,res,next) {
   const id = req.params.id
-  let body = {
-    release_at: new Date(),
-    status: 1
+  const status = +req.params.status 
+  const body = {status}
+  switch (status) {
+    case 1:
+      body.release_at = new Date()
+      break;
+    case 0:
+      break;
+    default:
+      return res.status(400).send({error_msg:'status 只能为0或1'})
+      break;
   }
-  return Article.findByIdAndUpdate(id,body).then(() => res.sendStatus(200)).catch(next)
+  return Article.findByIdAndUpdate(id,body).then((data) => res.status(200).json({status:data.status})).catch(next)
 }
 
 /*
