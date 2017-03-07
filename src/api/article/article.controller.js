@@ -73,7 +73,7 @@ exports.updateArticleStatus = function (req,res,next) {
       return res.status(400).send({error_msg:'status 只能为0或1'})
       break;
   }
-  return Article.findByIdAndUpdate(id,body).then((data) => res.status(200).json({status:data.status})).catch(next)
+  return Article.findByIdAndUpdate(id,body,{new:true}).then((data) => res.status(200).json({status:data.status})).catch(next)
 }
 
 /*
