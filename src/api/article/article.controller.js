@@ -101,12 +101,16 @@ exports.getArticle = function (req,res,next) {
 exports.getArticleList = function (req,res,next) {
   let tag = req.query.tag,
       title =  req.query.title,
+      status = parseInt(req.query.status),
       page =  parseInt(req.query.page) || 1,
       perPage =  parseInt(req.query.per_page) || 10,
       sort = req.query.sort || 'created_at',
       order = req.query.order === 'asc' ? 'asc' : 'desc'
   let conditions = {}
   let start = (page - 1) * perPage
+  if (status === 0 || status === 1) {
+    conditions.status = status 
+  }
   if (tag) {
     conditions.tags = tag 
   }
