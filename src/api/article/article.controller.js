@@ -82,7 +82,7 @@ exports.updateArticleStatus = function (req,res,next) {
 */
 exports.delArticle = function (req,res,next) {
   const id = req.params.id
-  return Article.findByIdAndRemove(id).then(() => res.sendStatus(204)).catch(next)
+  return Article.findByIdAndRemove(id).then(() => res.sendStatus(200)).catch(next)
 }
 
 /*
