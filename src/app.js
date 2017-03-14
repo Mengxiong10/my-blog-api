@@ -26,6 +26,7 @@ fs.readdirSync(modelPath).forEach((file)=>{
 
 const app = express()
 
+
 app.use(cors())
 
 // compress all responses
@@ -36,6 +37,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
+
+app.use('/static',express.static('tmp'))
 
 require('./routes.js')(app)
 app.listen(config.port,function () {
