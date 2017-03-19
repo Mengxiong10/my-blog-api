@@ -10,9 +10,10 @@ let config = {
       user: process.env.MONGO_USERNAME || '',
       pass: process.env.MONGO_PASSWORD || ''
     }
-  }
-
-
+  },
+  session:{
+    secret:'mxie-secret',
+  },
 }
 
 _.merge(config,require(`./${process.env.NODE_ENV}.js`))

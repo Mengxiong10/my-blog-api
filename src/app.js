@@ -8,6 +8,7 @@ const fs = require('fs')
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const cors = require('cors')
+const session = require('express-session')
 
 const config = require('./config')
 
@@ -26,7 +27,8 @@ fs.readdirSync(modelPath).forEach((file)=>{
 
 const app = express()
 
-
+app.use('/static',express.static('tmp'))
+// 跨域
 app.use(cors())
 
 // compress all responses
@@ -38,9 +40,15 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use('/static',express.static('tmp'))
+app.use(session({
+	secret: "mxie-secret",
+	resave: false,
+	saveUninitialized: false,
+	cookie:config.session.cookie,
+}))
 
 require('./routes.js')(app)
+
 app.listen(config.port,function () {
   console.log('server Listening on ' + config.port + '\n')
 })
