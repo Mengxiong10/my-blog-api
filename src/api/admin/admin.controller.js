@@ -3,13 +3,13 @@ const passport = require('passport')
 
 const Admin = mongoose.model('Admin')
 
-require('../../auth/passport.js').setup(Admin)
+// Admin.count().then((total)=>{
+//   if (total === 0) {
+//     Admin.create({username:'admin',password:'admin'})
+//   }
+// })
 
-Admin.count().then((total)=>{
-  if (total === 0) {
-    Admin.create({username:'admin',password:'admin'})
-  }
-})
+require('../../auth/passport.js').setup(Admin)
 
 exports.login = function (req,res,next) {
   passport.authenticate('local',function (err,user,info) {
@@ -19,7 +19,12 @@ exports.login = function (req,res,next) {
     if (info) {
       return res.status(403).send(info)
     }
-    return res.status(200).send({user})
+    req.login(user,function (err) {
+      if (err) {
+        return res.sendStatus(500)
+      }
+    })
+    res.status(200).json({state:req.isAuthenticated()})
   })(req,res,next)
 }
 

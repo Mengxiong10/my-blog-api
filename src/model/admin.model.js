@@ -9,7 +9,7 @@ const AdminSchema = new Schema({
 })
 
 AdminSchema.methods.validPassword = function (password) {
-  return password = this.password 
+  return password === this.password 
 }
 
 module.exports = mongoose.model('Admin',AdminSchema)

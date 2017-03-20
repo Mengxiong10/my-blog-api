@@ -15,18 +15,20 @@ const setup = function (User) {
         return done(null,user)
       }).catch(done)
     }
-  )) 
+  ))
 
   passport.serializeUser(function(user, done) {
-    // 仅在Session中保存用户ID
-    console.log(user,user.id)
-    done(null, user._id)
+    console.log(user,user.id,user._id,'haha')
+    done(null, user.id)
   })
 
   passport.deserializeUser(function(id, done) {
-    // 当收到后续请求，会通过用户ID查询用户，并将其保存在 req.user 中
+     console.log(id,'kaka')
     User.findById(id, function(err, user) {
-      done(err, user);
+      if (err) {
+        console.log(err);
+      }
+      done(err, user)
     })
   })
 }

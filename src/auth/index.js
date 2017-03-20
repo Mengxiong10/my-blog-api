@@ -1,6 +1,7 @@
 
 exports.admin = function (req,res,next) {
-  if (req.user) {
+ console.log(req.isAuthenticated())
+  if (req.isAuthenticated()) {
     next()
   }else{
     return res.sendStatus(401)

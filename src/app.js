@@ -52,7 +52,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 
-
 require('./routes.js')(app)
 
 app.listen(config.port,function () {
