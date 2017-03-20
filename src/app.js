@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const compression = require('compression')
 const cors = require('cors')
 const session = require('express-session')
+const passport = require('passport')
 
 const config = require('./config')
 
@@ -46,6 +47,11 @@ app.use(session({
 	saveUninitialized: false,
 	cookie:config.session.cookie,
 }))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+
 
 require('./routes.js')(app)
 

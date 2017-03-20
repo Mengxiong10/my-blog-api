@@ -8,4 +8,8 @@ const AdminSchema = new Schema({
   avatar:String,
 })
 
+AdminSchema.methods.validPassword = function (password) {
+  return password = this.password 
+}
+
 module.exports = mongoose.model('Admin',AdminSchema)
