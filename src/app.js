@@ -30,7 +30,10 @@ const app = express()
 
 app.use('/static',express.static('tmp'))
 // 跨域
-app.use(cors())
+app.use(cors({
+	origin:true,
+	credentials:true,
+}))
 
 // compress all responses
 app.use(compression())

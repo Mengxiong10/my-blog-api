@@ -17,7 +17,7 @@ exports.login = function (req,res,next) {
       return res.sendStatus(401)
     }
     if (info) {
-      return res.status(403).send(info)
+      return res.status(400).send(info)
     }
     req.login(user,function (err) {
       if (err) {

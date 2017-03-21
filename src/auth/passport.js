@@ -18,12 +18,10 @@ const setup = function (User) {
   ))
 
   passport.serializeUser(function(user, done) {
-    console.log(user,user.id,user._id,'haha')
-    done(null, user.id)
+    done(null, user._id)
   })
 
   passport.deserializeUser(function(id, done) {
-     console.log(id,'kaka')
     User.findById(id, function(err, user) {
       if (err) {
         console.log(err);
