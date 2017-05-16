@@ -1,8 +1,8 @@
 
-exports.admin = function (req,res,next) {
+exports.admin = function (req, res, next) {
   if (req.isAuthenticated()) {
     next()
-  }else{
+  } else {
     return res.sendStatus(401)
   }
 }
